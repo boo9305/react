@@ -1,0 +1,70 @@
+
+.header {
+  display:block;
+ 
+  height: 900px;
+  background:linear-gradient(to right, #090979, #00d4ff)
+}
+.mobile {
+  display:none;
+}
+
+.header > .nav { height: 250px; /* border : 1px solid; */}
+.header > .nav > .side { display:none; /* border : 1px solid; */}
+.header > .nav > .left { padding: 50px 0 0 100px; float: left; display:block;  }
+.header > .nav > .left > ul { float:left;}
+.header > .nav > .left > ul > li{
+  float:left;
+  list-style-type: none;
+  padding : 0px 50px 0px 0px;
+}
+
+.header > .nav > .left > ul > li > h3 > a{
+  color : #ffffff;
+  position: relative;
+}
+
+.header > .nav > .left > ul > li > h3 > a:before {
+  content: "";
+  display:block;
+  position:absolute;
+  width:0%;
+  height:1px;
+  background: #ffffff;
+  left:0;
+  bottom:0;
+  top:20px;
+
+  transition: width 0.5s;
+}
+.header > .nav > .left > ul > li > h3 > a:hover:before{
+  width:100%;
+}
+
+.header-section > h2 {
+  text-align: center;
+  color : #ffffff;
+}
+.header-section > .upload-button {
+  margin: 0 auto;
+  text-align: center;
+  
+  padding : 30px 0 0 0 ;
+}
+.header-section > .upload-button > a{
+  padding : 15px 20px;
+  width:200px;
+  border: 3px solid orange;
+  color:orange;
+  font-weight: bold;
+
+  border-radius: 5px;
+  
+  text-decoration: none;  
+}
+
+.header-section > .upload-button > a:hover {
+  background: orange;
+  color: white;
+}
+
