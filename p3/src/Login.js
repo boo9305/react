@@ -1,6 +1,8 @@
 import React from 'react'
 
 export default (props, history) => {
+
+
     return (
         <div>
             <div>
@@ -14,9 +16,7 @@ export default (props, history) => {
                     <input type='submit' value="login"/>
                 </form>
 
-                <input type='button' value='logout' onClick={() => {
-                    props.handleLogout()
-                }}></input>
+             
             </div>
 
             <hr />

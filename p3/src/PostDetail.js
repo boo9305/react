@@ -15,7 +15,7 @@ const PostDetail = (props) => {
                 "Content-Type": "application/json",
                 Authorization: `Token ${props.token}`
             }
-            axios.get(`/file_server/post/${postID}/`)
+            axios.get(`/server/post/${postID}/`)
             .then(res => { setPost(res.data) ; setComments(res.data.comments)})
             .catch(err => { console.log(err) })    
         }
@@ -34,7 +34,7 @@ const PostDetail = (props) => {
             "Content-Type": "application/json",
             Authorization: `Token ${props.token}`
         }
-        axios.post(`/file_server/comment/`, {
+        axios.post(`/server/comment/`, {
             post : postID, contents : comment 
         })
         .then(res => { console.log(res)})

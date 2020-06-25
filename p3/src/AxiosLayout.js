@@ -8,7 +8,6 @@ import PostDetail from './PostDetail';
 
 const AxiosLayout = (props) => {
     const [token , setToken] = useState("")
-    const [post, setPost] = useState([])
 
     const handleLogin = (username, password) => {
         axios.defaults.headers = {}
@@ -16,6 +15,7 @@ const AxiosLayout = (props) => {
             username: username, password: password
         }).then(res => {
             setToken(res.data.key)
+            localStorage.setItem("token", res.data.key)
             console.log(res.data)
             props.history.push("/")
         }).catch(err => console.log(err))
@@ -23,7 +23,7 @@ const AxiosLayout = (props) => {
 
     const handleLogout = () => {
         setToken(null)
-        setPost([])
+        localStorage.setItem("token", null)
         axios.defaults.headers = {
             "Content-Type": "application/json",
             Authorization: `Token ${token}`
@@ -33,31 +33,7 @@ const AxiosLayout = (props) => {
         }).catch(err => console.log(err))
     }
 
-    const handlePostList = () => {
-        axios.defaults.headers = {
-            "Content-Type": "application/json",
-            Authorization: `Token ${token}`
-        }
-        axios.get('/file_server/post/')
-            .then(res => setPost(res.data))
-            .catch(err => console.log(err))
-        
-    }
-    const handleCreatePost = (title, contents) => {
-        axios.defaults.headers = {
-            "Content-Type": "application/json",
-            Authorization: `Token ${token}`
-        }
-        console.log(token)
-
-        axios.post('/file_server/post/', {
-            author: "1",
-            title: title,
-            contents: contents,
-
-        }).then(res => { console.log(res) })
-            .catch(err => { console.log(err) })
-    }
+ 
 
     return (
         <div>
@@ -67,17 +43,16 @@ const AxiosLayout = (props) => {
             <div>
                 <NavLink to='/'>PostList</NavLink>
             </div>
+            <div>
+                <input type='button' value='logout' onClick={handleLogout}></input>
+            </div>
             <hr/>
             <Switch>
                 <Route exact path='/Login' render={() => (
                     <Login handleLogin={handleLogin} handleLogout={handleLogout} token={token}/>
                 )}></Route>
                 <Route exact path='/' render={() => (
-                    <PostList 
-                        handlePostList={handlePostList} 
-                        handleCreatePost={handleCreatePost} 
-                        token={token} 
-                        post={post}/>
+                    <PostList token={token} />
                     )}>
                 </Route>
                 <Route exact path='/post/:postID' render={() => (
