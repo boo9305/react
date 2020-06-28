@@ -1,40 +1,49 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { NavLink } from 'react-router-dom'
-export default (props) => {
+import { NavLink, withRouter } from 'react-router-dom'
+
+const PostList =  (props) => {
     const [post, setPost] = useState([])
 
     const handlePostList = () => {
         axios.defaults.headers = {
             "Content-Type": "application/json",
-            Authorization: `Token ${props.token}`
+            Authorization: `Token ${localStorage.getItem("token")}`
         }
         axios.get('/server/post/')
-            .then(res => setPost(res.data))
-            .catch(err => console.log(err))
+            .then(res => {
+                setPost(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+                setPost([])
+            })
 
     }
     const handleCreatePost = (e) => {
         e.preventDefault()
         axios.defaults.headers = {
             "Content-Type": "application/json",
-            Authorization: `Token ${props.token}`
+            Authorization: `Token ${localStorage.getItem("token")}`
         }
-        console.log(props.token)
+        console.log(localStorage.getItem("token"))
 
         axios.post('/server/post/', {
-            author: "1",
-            board: "1",
+
+            board: "11004",
             title: e.target.title.value,
             contents: e.target.contents.value,
 
         }).then(res => { console.log(res) })
             .catch(err => { console.log(err) })
+
     }
 
     useEffect(() => {
+        console.log("useEffect")
+        setPost(["kk"]);
         if (post.length === 0) {
-            handlePostList()
+             handlePostList()
         }
     }, [])
 
@@ -42,8 +51,12 @@ export default (props) => {
         <div>
             {console.log("list render")}
             {
-                props.token ?
+                localStorage.getItem("token") ?
                     <div>
+                        <input type="button" onClick={() => {
+                            //props.history.push("/")\
+                            window.location.reload()
+                        }}/>
                         <form onSubmit={handleCreatePost}>
                             <input type='title' name='title' />
                             <input type='contents' name='contents' />
@@ -72,3 +85,5 @@ export default (props) => {
         </div>
     )
 }
+
+export default withRouter(PostList)

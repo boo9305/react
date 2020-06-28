@@ -21,8 +21,8 @@ export default (props, history) => {
 
             <hr />
             {
-                props.token ?
-                    <div style={{ color: "red" }}>login {props.token}</div>
+                localStorage.getItem("token") ?
+                    <div style={{ color: "red" }}>login {props.token} {localStorage.getItem("token")}</div>
                     :
                     <div style={{ color: "red" }}>logout</div>
             }
