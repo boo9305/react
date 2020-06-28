@@ -2,13 +2,32 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import axios from 'axios'
-// axios.defaults.xsrfCookieName = 'csrftoken';
-// axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
+import authReducer from './reducers/auth'
+import postReducer from './reducers/post'
+
+import {createStore, compose, applyMiddleware, combineReducers } from 'redux'
+import thunk from 'redux-thunk'
+import {Provider} from 'react-redux'
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const rootReducer = combineReducers({
+  auth : authReducer,
+  post : postReducer,
+});
+
+const store = createStore(rootReducer, /* preloadedState, */ composeEnhancers(
+    applyMiddleware(thunk)
+));
+const app = ( 
+  <Provider store={store}>
+      <App/>
+  </Provider>
+)
 
 ReactDOM.render(
   /* <React.StrictMode> */
-    <App />,
+  app,
   /* </React.StrictMode>, */
   document.getElementById('root')
 );

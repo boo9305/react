@@ -1,14 +1,16 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 
-export default (props, history) => {
+import { authLogin, authLogout } from './actions/auth'
 
-
+const Login = (props, history) => {
     return (
         <div>
             <div>
                 <form onSubmit={(e) => {
                     e.preventDefault()
-                    props.handleLogin(e.target.username.value, e.target.password.value)
+                    props.login(e.target.username.value, e.target.password.value)
                     //history.push('/')
                 }}>
                     <input type='text' name='username' defaultValue='join'  />
@@ -22,10 +24,25 @@ export default (props, history) => {
             <hr />
             {
                 localStorage.getItem("token") ?
-                    <div style={{ color: "red" }}>login {props.token} {localStorage.getItem("token")}</div>
+                    <div style={{ color: "red" }}>login localStorage : {localStorage.getItem("token")} , token : {props.token}</div>
                     :
                     <div style={{ color: "red" }}>logout</div>
             }
         </div>
     )
 }
+
+const mapReduxStateToReactProps = state => {
+    return {
+        token: state.auth.token
+    }
+}
+
+const mapReduxDispatchToReactProps = dispatch => {
+    return {
+        login : (username,password) => dispatch(authLogin(username, password)),
+    }
+}
+
+
+export default withRouter(connect(mapReduxStateToReactProps, mapReduxDispatchToReactProps)(Login))

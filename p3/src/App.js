@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import AxiosLayout from './AxiosLayout';
 import { BrowserRouter, Route } from 'react-router-dom'
-function App() {
+import {connect} from 'react-redux'
+
+function App(props) {
   return (
     <div className="App">
       <BrowserRouter>
@@ -11,4 +13,11 @@ function App() {
   );
 }
 
-export default App;
+const mapReduxStateToReactProps = state => {
+  return {
+      token : state.token
+  }
+}
+
+
+export default connect(mapReduxStateToReactProps, null)(App);

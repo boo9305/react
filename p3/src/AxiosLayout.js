@@ -1,39 +1,18 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios'
-import { Switch, Route , NavLink, withRouter} from 'react-router-dom'
+import { Switch, Route, NavLink, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import Login from './Login'
 import PostList from './PostList'
 import PostDetail from './PostDetail';
 
+import { authCheck, authLogin, authLogout } from './actions/auth'
+
 const AxiosLayout = (props) => {
-    const [token , setToken] = useState("")
-
-    const handleLogin = (username, password) => {
-        axios.defaults.headers = {}
-        axios.post('/rest-auth/login/', {
-            username: username, password: password
-        }).then(res => {
-            setToken(res.data.key)
-            localStorage.setItem("token", res.data.key)
-            console.log(res.data)
-            props.history.push("/")
-        }).catch(err => console.log(err))
-    }
-
-    const handleLogout = () => {
-        setToken(null)
-        localStorage.setItem("token", null)
-        axios.defaults.headers = {
-            "Content-Type": "application/json",
-            Authorization: `Token ${token}`
-        }
-        axios.post('/rest-auth/logout/').then(res => {
-            console.log(res.data)
-        }).catch(err => console.log(err))
-    }
-
- 
+    useEffect(() => {
+        if (props.token == null ) props.onCheckLogin()
+    })
 
     return (
         <div>
@@ -44,25 +23,34 @@ const AxiosLayout = (props) => {
                 <NavLink to='/'>PostList</NavLink>
             </div>
             <div>
-                <input type='button' value='logout' onClick={handleLogout}></input>
+                <input type='button' value='logout' onClick={() => props.onLogout(props.token)}></input>
             </div>
-            <hr/>
+            <hr />
             <Switch>
                 <Route exact path='/Login' render={() => (
-                    <Login handleLogin={handleLogin} handleLogout={handleLogout} token={token}/>
+                    <Login/>
                 )}></Route>
-                <Route exact path='/' render={() => (
-                    <PostList token={token} />
-                    )}>
-                </Route>
-                <Route exact path='/post/:postID' render={() => (
-                    <PostDetail token={token}></PostDetail> )}>
-                </Route>
+                <Route exact path='/' component={PostList} />
+                <Route exact path='/post/:postID' component={PostDetail} />
             </Switch>
-            <hr/>
-         
+            <hr />
+
         </div>
     )
 }
 
-export default withRouter(AxiosLayout)
+const mapReduxStateToReactProps = state => {
+    return {
+        token: state.auth.token
+    }
+}
+
+const mapReduxDispatchToReactProps = dispatch => {
+    return {
+        onLogout : (token) => dispatch(authLogout(token)),
+        onCheckLogin : () => dispatch(authCheck())
+    }
+}
+
+
+export default withRouter(connect(mapReduxStateToReactProps, mapReduxDispatchToReactProps)(AxiosLayout))
