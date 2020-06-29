@@ -13,8 +13,6 @@ export const authSuccess = token => {
 
 
 export const authCheck = () => {
-    console.log("authCheck", localStorage.getItem("token"))
-
     return {
         type : AUTH_LOGIN,
         token : localStorage.getItem("token")

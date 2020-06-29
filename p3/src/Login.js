@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { authLogin, authLogout } from './actions/auth'
+import { authLogin } from './actions/auth'
 
 const Login = (props, history) => {
     return (
@@ -17,10 +17,7 @@ const Login = (props, history) => {
                     <input type='password' name='password' defaultValue='rlawlghks'  />
                     <input type='submit' value="login"/>
                 </form>
-
-             
             </div>
-
             <hr />
             {
                 localStorage.getItem("token") ?

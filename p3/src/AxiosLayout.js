@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios'
+import React, { useEffect } from 'react';
 import { Switch, Route, NavLink, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
@@ -7,12 +6,12 @@ import Login from './Login'
 import PostList from './PostList'
 import PostDetail from './PostDetail';
 
-import { authCheck, authLogin, authLogout } from './actions/auth'
+import { authCheck, authLogout } from './actions/auth'
 
 const AxiosLayout = (props) => {
     useEffect(() => {
-        if (props.token == null ) props.onCheckLogin()
-    })
+        props.onCheckLogin()
+    }, [props])
 
     return (
         <div>
@@ -20,7 +19,7 @@ const AxiosLayout = (props) => {
                 <NavLink to='/login'>Login</NavLink>
             </div>
             <div>
-                <NavLink to='/'>PostList</NavLink>
+                <NavLink to='/post'>PostList</NavLink>
             </div>
             <div>
                 <input type='button' value='logout' onClick={() => props.onLogout(props.token)}></input>
@@ -30,7 +29,7 @@ const AxiosLayout = (props) => {
                 <Route exact path='/Login' render={() => (
                     <Login/>
                 )}></Route>
-                <Route exact path='/' component={PostList} />
+                <Route exact path='/post' component={PostList} />
                 <Route exact path='/post/:postID' component={PostDetail} />
             </Switch>
             <hr />

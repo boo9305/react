@@ -1,29 +1,16 @@
-import React, { useState ,useEffect} from 'react'
+import React, { useEffect} from 'react'
 import axios from 'axios'
 
 import { withRouter } from 'react-router-dom' 
+import { connect } from 'react-redux'
+
+import { postDetail } from './actions/post.js'
 
 const PostDetail = (props) => {
-    const [post, setPost] = useState({title : "" , contents : ""})
-    const [comments, setComments] = useState([])
-
     useEffect(() => {
-        if (post.title === "") {
-            const postID = props.match.params.postID
-            console.log("postID: ", postID)
-            axios.defaults.headers = {
-                "Content-Type": "application/json",
-                Authorization: `Token ${props.token}`
-            }
-            axios.get(`/server/post/${postID}/`)
-            .then(res => { setPost(res.data) ; setComments(res.data.comments)})
-            .catch(err => { console.log(err) })    
-        }
-
-    })
-    const handlePostDetail = () => {
-   
-    }
+        const postID = props.match.params.postID
+        props.onPostDetail(props.token, postID)
+    }, [props.token])
 
     const handleCommentSubmit = (e) => {
         e.preventDefault()
@@ -40,31 +27,44 @@ const PostDetail = (props) => {
         .then(res => { console.log(res)})
         .catch(err => { console.log(err) })  
     }
-
-    return(
-        <div>  
-            title : {post.title}
+    return (
+        <div>
+            title : {props.post ? props.post.title : null}
             <hr/>
-            contents : {post.contents}
+            contents : {props.post ? props.post.contents : null}
             <hr/>
             ------- comments -------
             <hr/>
-
+            
             <form onSubmit={handleCommentSubmit}>
                 <input type="input" name="comment"></input>
                 <input type="submit" value="submit"></input>
             </form>
-
             {
-
-                comments.map(item=> {
+                props.post ? 
+                props.post.comments.map(item=> {
                     return (
-                        <div>{item.author} : {item.contents}</div>
+                        <div key={item.pk}>{item.author} : {item.contents}</div>
                     )
                 })
+                : 
+                null
             }
         </div>
     )
 }
 
-export default withRouter(PostDetail)
+const mapReduxStateToReactProps = state => {
+    return {
+        token: state.auth.token,
+        post: state.post.postDetail
+    }
+}
+
+const mapReduxDispatchToReactProps = dispatch => {
+    return {
+        onPostDetail : (token, postID) => dispatch(postDetail(token, postID))
+    }
+}
+
+export default withRouter(connect(mapReduxStateToReactProps, mapReduxDispatchToReactProps)(PostDetail))
