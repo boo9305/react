@@ -11,8 +11,8 @@ export const authSuccess = token => {
     }
 }
 
-
 export const authCheck = () => {
+    console.log("authCheck", localStorage.getItem("token"))
     return {
         type : AUTH_LOGIN,
         token : localStorage.getItem("token")
@@ -20,7 +20,6 @@ export const authCheck = () => {
 }
 
 export const authLogin = (username, password) => {
-    
     return dispatch => {
         console.log("login ... ")
         //dispatch(authInit())
@@ -37,6 +36,8 @@ export const authLogin = (username, password) => {
 }
 
 export const authLogout = (token) => {
+    if (token === null) return
+
     axios.defaults.headers = {
         "Content-Type": "application/json",
         Authorization: `Token ${token}`
@@ -46,6 +47,7 @@ export const authLogout = (token) => {
     }).catch(err => console.log(err))
 
     localStorage.setItem("token", null)
+    
     return {
         type : AUTH_LOGOUT,
     }

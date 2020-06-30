@@ -5,6 +5,8 @@ import * as serviceWorker from './serviceWorker';
 import authReducer from './reducers/auth'
 import postReducer from './reducers/post'
 
+import './index.css'
+
 import {createStore, compose, applyMiddleware, combineReducers } from 'redux'
 import thunk from 'redux-thunk'
 import {Provider} from 'react-redux'

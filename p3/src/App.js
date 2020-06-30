@@ -1,9 +1,17 @@
-import React from 'react';
-import AxiosLayout from './AxiosLayout';
+import React, {useEffect} from 'react';
+import AxiosLayout from './Layout';
 import { BrowserRouter } from 'react-router-dom'
 import {connect} from 'react-redux'
 
+import { authCheck } from './actions/auth'
+
+import './index.css'
+
 function App(props) {
+  useEffect(() => {
+    props.onCheckLogin()
+  })
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -13,5 +21,10 @@ function App(props) {
   );
 }
 
+const mapReduxDispatchToReactProps = dispatch => {
+  return {
+      onCheckLogin : () => dispatch(authCheck())
+  }
+}
 
-export default connect(null, null)(App);
+export default connect(null, mapReduxDispatchToReactProps)(App);
