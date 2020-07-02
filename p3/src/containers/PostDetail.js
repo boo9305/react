@@ -9,30 +9,37 @@ const PostDetail = (props) => {
     console.log("render postdetail")
     return (
         <div>
-            title : {props.post ? props.post.title : null}
-            <hr/>
-            contents : {props.post ? props.post.contents : null}
-            <hr/>
-            ------- comments -------
-            <hr/>
-            
-            <form onSubmit={(e) => {
-                e.preventDefault();
-                props.onCommentCreate(props.token, props.post.pk, e.target.comment.value)
-            }}>
-                <input type="input" name="comment"></input>
-                <input type="submit" value="submit"></input>
-            </form>
-            {
-                props.post ? 
-                props.post.comments.map(item=> {
-                    return (
-                        <div key={item.pk}>{item.author} : {item.contents}</div>
-                    )
-                })
-                : 
-                null
-            }
+            {props.post ? 
+                <div>
+                    <p>title  : {props.post.title}</p>
+                    <hr />
+                    <p>contents : {props.post.contents}</p>
+                    <hr />
+                    <p>------- comments -------</p>
+                    <hr />
+                    <form onSubmit={(e) => {
+                        e.preventDefault();
+                        props.onCommentCreate(props.token, props.post.pk, e.target.comment.value)
+                    }}>
+                        <input type="input" name="comment"></input>
+                        <input type="submit" value="submit"></input>
+                    </form>
+                    {
+                        props.post ?
+                            props.post.comments.map(item => {
+                                return (
+                                    <div key={item.pk}>{item.author} : {item.contents}</div>
+                                )
+                            })
+                            :
+                            null
+                    }
+
+                </div> :
+                <div></div>
+            } 
+
+          
         </div>
     )
 }

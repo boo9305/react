@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import AxiosLayout from './Layout';
+import AxiosLayout from './containers/Layout';
 import { BrowserRouter } from 'react-router-dom'
 import {connect} from 'react-redux'
 

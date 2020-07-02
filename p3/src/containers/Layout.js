@@ -2,13 +2,13 @@ import React from 'react';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import './index.css'
+import '../index.css'
 
 import Login from './Login'
-import { authCheck, authLogout } from './actions/auth'
-import { postInit } from './actions/post'
+import { authCheck, authLogout } from '../actions/auth'
+import { postInit } from '../actions/post'
 
-import PostContainer from './containers/PostContainer';
+import PostContainer from './PostContainer';
 
 const Layout = (props) => {
     console.log("render Layout")

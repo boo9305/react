@@ -18,7 +18,7 @@ export const detailPostSuccess = (data) => { return { type : DETAIL_POST_SUCCESS
 
 export const postList = (token) => {
     return dispatch => {
-        if (token === null) { return }
+        if (token === "null") { return }
         dispatch( { type : LIST_POST_START })
 
         axios.defaults.headers = {
@@ -38,7 +38,7 @@ export const postList = (token) => {
 
 export const postDetail = (token, postID) => {
     return dispatch => {
-        if (token === null) { return }
+        if (token === "null") { return }
         dispatch( { type : DETAIL_POST_START })
 
         axios.defaults.headers = {
@@ -58,6 +58,7 @@ export const postDetail = (token, postID) => {
 
 export const postCreate = (token, board, title , contents) => {
     return dispatch => {
+        if (token === "null") { return }
         console.log("postCreate")
 
         axios.defaults.headers = {
@@ -80,6 +81,8 @@ export const postCreate = (token, board, title , contents) => {
 
 export const commentCreate = (token, postID, comment) => {
     return dispatch => {
+        if (token === "null") { return }
+        
         axios.defaults.headers = {
             "Content-Type": "application/json",
             Authorization: `Token ${token}`

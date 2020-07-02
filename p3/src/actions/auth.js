@@ -36,8 +36,9 @@ export const authLogin = (username, password) => {
 }
 
 export const authLogout = (token) => {
-    if (token === null) return
+    if (token === "null") return { type: AUTH_LOGOUT}
 
+    console.log("auth Logout")
     axios.defaults.headers = {
         "Content-Type": "application/json",
         Authorization: `Token ${token}`
@@ -46,7 +47,7 @@ export const authLogout = (token) => {
         console.log(res.data)
     }).catch(err => console.log(err))
 
-    localStorage.setItem("token", null)
+    localStorage.setItem("token", "null")
     
     return {
         type : AUTH_LOGOUT,

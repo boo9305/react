@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { authLogin } from './actions/auth'
+import { authLogin } from '../actions/auth'
 
 const Login = (props, history) => {
     return (
