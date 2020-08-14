@@ -26,7 +26,8 @@ export const postList = (token) => {
         if (token === null) { return }
         axios.defaults.headers = {
             "Content-Type": "application/json",
-            Authorization: `Token ${token}`
+            //Authorization: `JWT ${token}`
+            Authorization: `token ${token}`
         }
         axios.get('/server/post/')
             .then(res => {
@@ -44,7 +45,8 @@ export const postDetail = (token, postID) => {
 
         axios.defaults.headers = {
             "Content-Type": "application/json",
-            Authorization: `Token ${token}`
+            //Authorization: `JWT ${token}`
+            Authorization: `token ${token}`
         }
         axios.get(`/server/post/${postID}`)
             .then(res => {
@@ -62,7 +64,7 @@ export const postCreate = (token, board, title , contents) => {
 
         axios.defaults.headers = {
             "Content-Type": "application/json",
-            Authorization: `Token ${token}` 
+            Authorization: `JWT ${token}` 
         }
         console.log(localStorage.getItem("token"))
 

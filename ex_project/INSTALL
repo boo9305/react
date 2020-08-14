@@ -1,0 +1,4 @@
+npx create_react_app ex_project1
+npm install react-router-dom
+npm install react-redux
+npm install redux-thunk

@@ -4,7 +4,11 @@ import { connect } from 'react-redux'
 
 import { authLogin } from './actions/auth'
 
-const Login = (props, history) => {
+import { GoogleLogin } from 'react-google-login'
+const Login = (props) => {
+    const responseGoogle = (response) => {
+        alert(response)
+    }
     return (
         <div>
             <div>

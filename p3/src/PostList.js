@@ -12,7 +12,7 @@ const PostList = (props) => {
     return (
         <div>
             {console.log("list render")}
-            <div style={{ float: "left", width: "50%" , border: "1px solid"}}>
+            <div style={{ float: "left", width: "50%" , height: "500px", border: "1px solid"}}>
                 <form onSubmit={(e) => { e.preventDefault(); props.onPostCreate(props.token, "11004", e.target.title.value, e.target.contents.value) }}>
                     <input type='title' name='title' />
                     <input type='contents' name='contents' />

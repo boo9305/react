@@ -3,7 +3,6 @@ import axios from 'axios'
 export const AUTH_LOGIN = "AUTH_LOGIN"
 export const AUTH_LOGOUT = "AUTH_LOGOUT"
 
-// dispatch 는 액션을 리턴하고 
 export const authSuccess = token => {
     return {
         type : AUTH_LOGIN,
