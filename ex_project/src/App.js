@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter} from 'react-router-dom'
+import { BrowserRouter, Route, Link } from 'react-router-dom'
 import './App.css';
 import Layout from './containers/Layout'
+import ExerciseCardUpdate from './containers/ExerciseCardUpdate'
 import MyData from "./data.json"
 
 function App() {
@@ -16,7 +17,15 @@ function App() {
         <div className="App">
             <h3>ex project</h3>
             <BrowserRouter>
-                <Layout></Layout>
+
+
+                <Route exact path='/excard/' render={() => (
+                    <ExerciseCardUpdate></ExerciseCardUpdate>
+                )}/>
+                <Route exact path='/' render={() => (
+                    <Layout></Layout>
+                )}/>
+
             </BrowserRouter>
             <div>
             ---------------
